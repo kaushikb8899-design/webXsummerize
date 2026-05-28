@@ -1,0 +1,384 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ResearchBrief AI - Auto-Tracking Research Synthesizer</title>
+    <link rel="stylesheet" href="/src/global.css" />
+  </head>
+  <body class="flex flex-col min-h-screen bg-[#05070F] text-slate-200 font-sans">
+    
+    <!-- Premium Navigation Bar -->
+    <header class="glass-nav fixed top-0 left-0 right-0 z-40">
+      <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+        <a href="index.html" class="flex items-center gap-3 group" id="nav-brand">
+          <div class="w-10 h-10 bg-[#0066FF] rounded-lg flex items-center justify-center shadow-[0_0_20px_rgba(0,102,255,0.4)] group-hover:scale-105 transition-all">
+            <svg class="w-5 h-5 text-white animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z" stroke-dasharray="30" stroke-dashoffset="0"/>
+            </svg>
+          </div>
+          <span class="text-xl font-bold tracking-tight text-white group-hover:text-blue-400 transition-colors">ResearchBrief <span class="text-[#0066FF]">AI</span></span>
+        </a>
+        
+        <nav class="flex items-center gap-2">
+          <a href="index.html" class="text-white border-b-2 border-[#0066FF] pb-1 px-4 py-2 text-xs font-semibold uppercase tracking-wider transition-all">Home</a>
+          <a href="history.html" class="text-gray-400 hover:text-white px-4 py-2 rounded-lg text-xs font-semibold uppercase tracking-wider transition-all">History</a>
+        </nav>
+        
+        <div class="hidden md:flex items-center gap-2">
+          <div class="flex items-center gap-2 px-3.5 py-1.5 bg-emerald-500/10 border border-emerald-500/20 rounded-full">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping"></span>
+            <span class="text-[10px] font-mono text-emerald-500 uppercase tracking-widest">AUTO ENGINE ACTIVE</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Glowing backdrop orbs to establish atmospheric tone -->
+    <div class="ambient-orb top-32 right-[8%]" id="ambient-orb-1"></div>
+    <div class="ambient-orb bottom-[20%] left-[5%] shadow-indigo-600/5" id="ambient-orb-2"></div>
+
+    <!-- MAIN INTERACTIVE STREAM -->
+    <main class="flex-grow pt-24 pb-24 relative overflow-hidden" id="main-canvas">
+      
+      <!-- ==================== LANDING AND WORKSPACE STATE ==================== -->
+      <div id="landing-state-container" class="space-y-24 transition-opacity duration-500">
+        
+        <!-- Hero Section -->
+        <section class="text-center max-w-4xl mx-auto space-y-8 pt-16 px-6 relative z-10" id="hero-section">
+          <div class="inline-flex items-center gap-2 bg-blue-900/15 border border-blue-800/30 text-blue-400 px-4 py-1.5 rounded-full shadow-lg" id="security-badge">
+            <span class="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse"></span>
+            <span class="text-[9px] font-mono uppercase tracking-widest font-extrabold">Session Auto-Tracker Activated</span>
+          </div>
+
+          <h1 class="text-white text-5xl md:text-7xl font-extrabold font-sans leading-[1.08] tracking-tight mt-2" id="hero-title">
+            Research the web <br/>
+            <span class="bg-gradient-to-r from-[#0066FF] via-[#06B6D4] to-indigo-400 bg-clip-text text-transparent">without copy-pasting.</span>
+          </h1>
+
+          <p class="text-slate-400 text-base md:text-lg max-w-2xl mx-auto font-sans leading-relaxed text-balance" id="hero-p">
+            Start a tracking session, browse normally, and let our zero-input system automatically capture visited resources. Instantly synthesize them into structured summaries, responsive CSS mindmaps, and infographics.
+          </p>
+
+          <!-- Core session trigger -->
+          <div class="flex flex-col items-center justify-center gap-5 pt-4" id="hero-controls">
+            <!-- Topic selector dropdown to make simulation rich and context-aware -->
+            <div class="flex flex-col items-center gap-2.5 w-full max-w-sm" id="topic-selector-wrapper">
+              <label for="research-topic" class="text-[10px] font-mono text-slate-500 uppercase tracking-widest font-bold">Select Active Research Theme</label>
+              <select id="research-topic" class="w-full bg-[#0F1322] border border-white/10 rounded-xl px-4 py-3 text-xs font-semibold text-slate-200 tracking-wide focus:border-[#0066FF] focus:outline-none transition-all cursor-pointer">
+                <option value="quantum">Quantum Computing: High-Temperature Superconductors & Commercial NISQ Era</option>
+                <option value="ai-agents">Autonomous AI Agents: Routing, Multimodal Memory, & Tool Orchestration</option>
+                <option value="biotech">Next-Gen Biotech: CRISPR Therapeutics & Protein Structure Mapping</option>
+                <option value="saas">SaaS Ecosystems: Micro-SaaS scaling models & AI-Integrated Core Workflows</option>
+              </select>
+            </div>
+
+            <button type="button" id="start-tracking-btn" class="glow-btn px-10 py-4.5 rounded-xl text-white font-bold text-sm tracking-widest uppercase transition-all shadow-2xl flex items-center justify-center gap-3 w-full max-w-sm cursor-pointer hover:scale-[1.02] active:scale-[0.98]">
+              <svg class="w-4 h-4 fill-white" viewBox="0 0 24 24">
+                <path d="M8 5v14l11-7z"/>
+              </svg>
+              Start Auto-Tracking Session
+            </button>
+            
+            <div class="flex items-center gap-2.5" id="history-counter-label">
+              <span class="w-1.5 h-1.5 rounded bg-emerald-500/80"></span>
+              <a href="history.html" id="history-badge" class="text-xs text-slate-500 hover:text-slate-300 font-mono transition-colors">Access history logs</a>
+            </div>
+          </div>
+        </section>
+
+        <!-- Features Grid SECTION (3-column Sleek Framer style) -->
+        <section class="max-w-6xl mx-auto px-6 space-y-10 relative z-10" id="features-section">
+          <div class="text-center space-y-2">
+            <h2 class="text-white text-2xl font-extrabold font-sans tracking-tight">Structured outputs, zero copying required.</h2>
+            <p class="text-slate-500 text-xs font-mono uppercase tracking-widest text-[#0066FF]">Delivered Modules Overview</p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Card 1: Summaries -->
+            <div class="relative group rounded-2xl overflow-hidden p-0.5" id="feature-card-1">
+              <div class="absolute -inset-0.5 bg-gradient-to-tr from-[#0066FF] to-transparent rounded-2xl blur opacity-0 group-hover:opacity-10 transition duration-300"></div>
+              <div class="relative premium-card p-8 bg-[#0F1322]/80 border border-white/5 rounded-2xl flex flex-col gap-4 h-full">
+                <div class="w-12 h-12 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-[#0066FF] shadow-inner">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"></path>
+                  </svg>
+                </div>
+                <div class="space-y-2">
+                  <h3 class="text-lg font-bold text-white tracking-tight">AI Executive Summaries</h3>
+                  <p class="text-sm text-slate-400 leading-relaxed">
+                    Slices complex logs into four distinct structural core pillars. Includes trend highlights, confidence indexes, and lists of business action items.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 2: Interactive Mindmaps -->
+            <div class="relative group rounded-2xl overflow-hidden p-0.5" id="feature-card-2">
+              <div class="absolute -inset-0.5 bg-gradient-to-tr from-[#06B6D4] to-transparent rounded-2xl blur opacity-0 group-hover:opacity-10 transition duration-300"></div>
+              <div class="relative premium-card p-8 bg-[#0F1322]/80 border border-white/5 rounded-2xl flex flex-col gap-4 h-full">
+                <div class="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400 shadow-inner">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94-3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z"></path>
+                  </svg>
+                </div>
+                <div class="space-y-2">
+                  <h3 class="text-lg font-bold text-white tracking-tight">Interactive CSS Mindmaps</h3>
+                  <p class="text-sm text-slate-400 leading-relaxed">
+                    Graphically maps core concepts together using reactive container nodes, clean connections, and detailed nested item bubbles for immediate visual study.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 3: Dashboard Infographics -->
+            <div class="relative group rounded-2xl overflow-hidden p-0.5" id="feature-card-3">
+              <div class="absolute -inset-0.5 bg-gradient-to-tr from-indigo-500 to-transparent rounded-2xl blur opacity-0 group-hover:opacity-10 transition duration-300"></div>
+              <div class="relative premium-card p-8 bg-[#0F1322]/80 border border-white/5 rounded-2xl flex flex-col gap-4 h-full">
+                <div class="w-12 h-12 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400 shadow-inner">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 14.25v2.25M12 11.25v5.25m4.5-9v9M3 18.75h18M3 4.5h18c.621 0 1.125.504 1.125 1.125v12.375c0 .621-.504 1.125-1.125 1.125H3c-.621 0-1.125-.504-1.125-1.125V5.625C1.875 5.025 2.379 4.5 3 4.5z"></path>
+                  </svg>
+                </div>
+                <div class="space-y-2">
+                  <h3 class="text-lg font-bold text-white tracking-tight">Visual Infographic Canvas</h3>
+                  <p class="text-sm text-slate-400 leading-relaxed">
+                    Visualizes quantitative estimates dynamically through big-stat score blocks, ratings, confidence level nodes, and custom indicators.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- "How It Works" SECTION (Vertical Timeline Layout) -->
+        <section class="max-w-4xl mx-auto px-6 space-y-16 relative z-10" id="how-it-works-section">
+          <div class="text-center space-y-2">
+            <h2 class="text-white text-2xl font-extrabold font-sans tracking-tight">Silent background tracking workflow</h2>
+            <p class="text-slate-500 text-xs font-mono">The tool works seamlessly in your background as you operate.</p>
+          </div>
+
+          <!-- Timeline Container -->
+          <div class="relative border-l-2 border-[#0F1322]/80 ml-4 md:ml-32 space-y-12" id="timeline">
+            
+            <!-- Step 1 -->
+            <div class="relative pl-8" id="timeline-step-1">
+              <div class="absolute -left-3.5 top-0.5 w-7 h-7 rounded-lg bg-[#0066FF] border-4 border-[#05070F] shadow-[0_0_10px_rgba(0,102,255,0.4)] flex items-center justify-center text-white text-[10px] font-bold">1</div>
+              <div class="space-y-2">
+                <span class="inline-block text-[9px] font-mono text-blue-500 uppercase font-extrabold tracking-widest bg-blue-950/30 px-2 py-0.5 rounded border border-blue-900/20">Initialize Tracker</span>
+                <h3 class="text-lg font-bold text-white">Click "Start Auto-Tracking"</h3>
+                <p class="text-sm text-slate-400 leading-relaxed max-w-2xl">
+                  Arm the local storage queue. A background tab observer immediately sets up listeners, waiting to securely track relevant web locations.
+                </p>
+              </div>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="relative pl-8" id="timeline-step-2">
+              <div class="absolute -left-3.5 top-0.5 w-7 h-7 rounded-lg bg-cyan-500 border-4 border-[#05070F] shadow-[0_0_10px_rgba(6,182,212,0.4)] flex items-center justify-center text-white text-[10px] font-bold">2</div>
+              <div class="space-y-2">
+                <span class="inline-block text-[9px] font-mono text-cyan-400 uppercase font-extrabold tracking-widest bg-cyan-950/30 px-2 py-0.5 rounded border border-cyan-900/20">Navigate Freely</span>
+                <h3 class="text-lg font-bold text-white">Surf internet, compile naturally</h3>
+                <p class="text-sm text-slate-400 leading-relaxed max-w-2xl">
+                  Open new tabs or read. The engine parses title metadata and full URLs of completed tabs, assembling them dynamically into your regional storage repository.
+                </p>
+              </div>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="relative pl-8" id="timeline-step-3">
+              <div class="absolute -left-3.5 top-0.5 w-7 h-7 rounded-lg bg-indigo-500 border-4 border-[#05070F] shadow-[0_0_10px_rgba(99,102,241,0.4)] flex items-center justify-center text-white text-[10px] font-bold">3</div>
+              <div class="space-y-2">
+                <span class="inline-block text-[9px] font-mono text-indigo-400 uppercase font-extrabold tracking-widest bg-indigo-950/30 px-2 py-0.5 rounded border border-indigo-900/20">Compile Briefing</span>
+                <h3 class="text-lg font-bold text-white">Click Stop & Synthesize</h3>
+                <p class="text-sm text-slate-400 leading-relaxed max-w-2xl">
+                  Retrieve URLs from local state storage. Hit Gemini 3.5 Flash server-side without ever exposing keys, generating high-contrast, beautiful visual briefings.
+                </p>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+      </div>
+
+
+      <!-- ==================== ACTIVE RECORDING STATE (PULSING INTERFACE) ==================== -->
+      <section id="recording-state-container" class="hidden text-center max-w-3xl mx-auto space-y-10 px-6 pt-12 relative z-10 animate-fade-in">
+        
+        <!-- Pulsing Orb Banner -->
+        <div class="inline-flex items-center gap-3 bg-[#1C090C]/40 border border-[#2F1F24] p-4 rounded-2xl w-full max-w-md mx-auto justify-center shadow-lg hover:border-rose-500/20 transition-colors" id="tracking-pulse-banner">
+          <span class="relative flex h-3 w-3">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-3 w-3 bg-rose-500"></span>
+          </span>
+          <span class="text-xs font-mono text-rose-400 tracking-wider font-semibold uppercase">Recording active... tracking session live</span>
+        </div>
+
+        <div class="space-y-3" id="recording-header-info">
+          <span class="text-[10px] font-mono text-slate-500 uppercase tracking-widest font-extrabold mt-2 block" id="current-theme-label">Active Research Theme</span>
+          <h2 class="text-white text-3xl font-extrabold font-sans" id="active-track-name">Autonomous AI Agents Analysis</h2>
+          <p class="text-slate-400 text-sm max-w-md mx-auto" id="recording-desc">
+            The background observer is listening for completed tab loads. Read your papers normally - simulated visits are generated here dynamically to demonstrate live operation.
+          </p>
+        </div>
+
+        <!-- Simulated Active Sources Sandbox Box -->
+        <div class="premium-card p-6 rounded-2xl max-w-xl mx-auto space-y-4" id="simulated-browser-sandbox">
+          <div class="flex items-center justify-between border-b border-white/5 pb-3">
+            <span class="text-[10px] font-mono text-slate-400 uppercase tracking-wider font-bold">Captured browser locations</span>
+            <span id="collected-counter-badge" class="text-xs font-mono text-blue-400 font-bold bg-blue-950/40 border border-blue-900/30 px-2.5 py-0.5 rounded-full">0 Targets Capturing</span>
+          </div>
+
+          <!-- Dynamic URLs list -->
+          <div id="simulated-visits-list" class="space-y-2.5 max-h-[180px] overflow-y-auto pr-1">
+            <!-- Programmatic items will reside here -->
+            <div class="p-8 text-center text-slate-500 text-xs font-mono italic" id="empty-visits-note">
+              Waiting for browser tab visits...
+            </div>
+          </div>
+
+          <!-- Controls to trigger simulated visits inside sandboxed environment -->
+          <div class="flex flex-col sm:flex-row gap-2.5 pt-3 border-t border-white/5" id="sim-trigger-row">
+            <button type="button" id="simulate-tab-btn" class="flex-1 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-850 hover:border-slate-700 text-slate-300 font-semibold text-xs tracking-wide transition-all cursor-pointer flex items-center justify-center gap-1.5">
+              <svg class="w-4 h-4 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"/>
+              </svg>
+              Simulate Visited Research Tab
+            </button>
+          </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="flex flex-col items-center gap-3 pt-4" id="recording-action-row">
+          <button type="button" id="stop-tracking-btn" class="glow-btn px-10 py-4.5 rounded-xl text-white font-bold text-sm tracking-widest uppercase transition-all shadow-2xl flex items-center justify-center gap-2 max-w-sm w-full cursor-pointer hover:scale-[1.02] active:scale-[0.98]">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 10a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1v-4z"></path>
+            </svg>
+            Stop Auto-Tracking & Synthesize
+          </button>
+        </div>
+
+      </section>
+
+
+      <!-- ==================== PROGRAMMATIC LOADING STATE OVERLAY ==================== -->
+      <section id="processing-state-container" class="hidden fixed inset-0 bg-[#05070F]/95 backdrop-blur-md z-50 flex-col items-center justify-center px-12 transition-all duration-300">
+        <div class="max-w-md w-full text-center space-y-8 animate-fade-in-up">
+          
+          <!-- Spinning Loader -->
+          <div class="relative w-20 h-20 mx-auto flex items-center justify-center">
+            <div class="absolute inset-0 rounded-full border-4 border-slate-800"></div>
+            <div class="absolute inset-0 rounded-full border-4 border-[#0066FF] border-t-transparent animate-spin"></div>
+            <div class="relative w-4.5 h-4.5 rounded-full bg-[#0066FF] shadow-[0_0_20px_rgba(0,102,255,0.8)] animate-pulse"></div>
+          </div>
+
+          <div class="space-y-3">
+            <span class="inline-flex items-center text-[10px] font-mono font-bold text-[#0066FF] bg-blue-950/40 px-3 py-1 rounded-md border border-blue-900/40 uppercase tracking-widest">GEMINI ENGINE PROCESSING</span>
+            <h2 class="text-white text-xl font-bold font-sans tracking-wide">Synthesizing Captured Research Brief</h2>
+            <div class="h-6 overflow-hidden relative">
+              <p id="compiler-status-text" class="text-xs text-cyan-400 font-mono tracking-tight transition-all duration-300 inline-block w-full">Retrieving URLs index cache...</p>
+            </div>
+            <p class="text-[11px] text-slate-500 leading-normal max-w-sm mx-auto">Connecting to Gemini 3.5 Flash models on server. Gathering context and mapping concept branches...</p>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- ==================== PROGRAMMATIC DYNAMIC RESULTS OVERLAY ==================== -->
+      <section id="result-state-container" class="hidden max-w-5xl mx-auto space-y-10 px-6 pt-12 relative z-10 animate-fade-in">
+        
+        <!-- Header Metadata Display Card -->
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 border-b border-white/5 pb-8" id="live-results-header">
+          <div class="space-y-3 min-w-0 flex-1">
+            <div class="flex flex-wrap items-center gap-2.5">
+              <span class="inline-flex items-center text-[10px] font-mono font-bold text-[#0066FF] bg-blue-950/40 px-2.5 py-1 rounded-md border border-blue-900/35 uppercase">Session Insights Brief</span>
+              <span id="live-result-timestamp" class="text-xs text-slate-500 font-mono">Just compiled</span>
+            </div>
+            <h1 id="live-result-title" class="text-white text-3xl md:text-4.5xl font-extrabold tracking-tight mt-1 truncate">Research Brief Output</h1>
+            
+            <div class="flex items-center gap-1.5" id="live-result-urls-label">
+              <span class="text-[10px] font-mono uppercase tracking-wider text-slate-500">Tracked Locations Analysed:</span>
+              <div id="live-result-urls" class="flex flex-wrap gap-2">
+                <!-- Programmatic URL Pills Injected Here -->
+              </div>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-3 flex-shrink-0" id="live-results-header-actions">
+            <button type="button" id="reset-to-landing-btn" class="px-5 py-3 rounded-xl border border-white/5 hover:border-[#0066FF]/30 hover:text-white bg-[#0F1322]/40 hover:bg-[#0066FF]/10 font-semibold text-xs text-slate-400 transition-all flex items-center gap-2 cursor-pointer">
+              <svg class="w-4 h-4 text-[#0066FF]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+              New Tracking Session
+            </button>
+          </div>
+        </div>
+
+        <!-- Segmented Tab Navigators -->
+        <section class="border-b border-white/5 pb-2" id="live-tabs-container">
+          <div class="tabs-wrapper font-sans flex-wrap">
+            <button type="button" id="live-tab-summary-btn" class="tab-trigger flex items-center gap-2">
+              <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m5.23 13.479l-4.14-4.14m0 0L8.25 10.5M13.5 13.5l-4.14-4.14M12 21H6.75A2.25 2.25 0 014.5 18.75V6.75A2.25 2.25 0 016.75 4.5h2.25A2.25 2.25 0 0111.25 6v2.25a2.25 2.25 0 002.25 2.25h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H12z"></path>
+              </svg>
+              Executive Summary
+            </button>
+            <button type="button" id="live-tab-mindmap-btn" class="tab-trigger flex items-center gap-2">
+              <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94-3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z"></path>
+              </svg>
+              Interactive Mindmap
+            </button>
+            <button type="button" id="live-tab-infographic-btn" class="tab-trigger flex items-center gap-2">
+              <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 14.25v2.25M12 11.25v5.25m4.5-9v9M3 18.75h18M3 4.5h18c.621 0 1.125.504 1.125 1.125v12.375c0 .621-.504 1.125-1.125 1.125H3c-.621 0-1.125-.504-1.125-1.125V5.625C1.875 5.025 2.379 4.5 3 4.5z"></path>
+              </svg>
+              Visual Infographic
+            </button>
+          </div>
+        </section>
+
+        <!-- Segmented Tab Display Regions -->
+        <section id="live-outputs-pool" class="relative">
+          
+          <!-- 1. Summary Column View -->
+          <div id="live-summary-content" class="hidden space-y-6 pt-2">
+            <!-- Programmatic HTML will be injected here -->
+          </div>
+
+          <!-- 2. Connection line CSS-based Mindmap View -->
+          <div id="live-mindmap-content" class="hidden space-y-6 pt-2 overflow-x-auto min-w-full">
+            <!-- Programmatic HTML will be injected here -->
+          </div>
+
+          <!-- 3. Dashboard metrics Infographic View -->
+          <div id="live-infographic-content" class="hidden space-y-6 pt-2">
+            <!-- Programmatic HTML will be injected here -->
+          </div>
+
+        </section>
+
+      </section>
+
+    </main>
+
+    <!-- Shared Footer -->
+    <footer class="border-t border-white/5 mt-auto py-10 bg-[#05070f] relative z-10">
+      <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
+        <div class="text-center md:text-left">
+          <p class="text-xs text-slate-500 font-mono">© 2026 ResearchBrief AI. Auto-tracker active in sandboxed session.</p>
+          <p class="text-[11px] text-slate-600 mt-1">Zero manual inputs. Back-end processing protects API credentials securely.</p>
+        </div>
+        <nav class="flex items-center gap-6 text-xs text-slate-400">
+          <a href="index.html" class="hover:text-blue-400 transition-colors">Home</a>
+          <a href="history.html" class="hover:text-blue-400 transition-colors">History</a>
+        </nav>
+      </div>
+    </footer>
+
+    <!-- Core Script -->
+    <script type="module" src="/src/app.js"></script>
+  </body>
+</html>

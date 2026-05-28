@@ -1,0 +1,6 @@
+{
+  "name": "ResearchBrief AI",
+  "description": "A premium multi-page research assistant powered by Gemini AI, designed to synthesize URLs into logical mindmaps, detailed infographics, and clear executive summaries.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
